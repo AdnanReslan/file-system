@@ -1,0 +1,23 @@
+<p-menubar [model]="items" >
+    <div>
+        <input type="text" pInputText placeholder="Search">
+       
+    </div>
+</p-menubar>
+<br>
+
+<div class="container-fluid" *ngIf="loadGroups">
+
+    <div class="row" *ngFor="let item of skeltonLoderArray">
+        <div class="col">
+            <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+            <br>
+    
+            <p-skeleton width="25%" styleClass="mb-2"></p-skeleton>
+            <br>
+            <p-skeleton width="12%"></p-skeleton>
+            <br>
+        </div>
+    </div>
+
+</div>

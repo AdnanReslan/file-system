@@ -1,0 +1,73 @@
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="grid p-fluid">
+                <div class="col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<mat-toolbar class="mat-elevation-z8">
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+    Manage your files
+  </mat-toolbar>
+  
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav"  class="mat-elevation-z8">
+      <img
+        class="avatar mat-elevation-z8"
+        src="assets/images/unknow.jfif"
+      />
+  
+      <h4 class="name">Adnan Reslan</h4>
+      <p class="designation">Software Engineer</p>
+  
+      <mat-divider></mat-divider>
+  
+      <button mat-button class="menu-button" routerLink="/home">
+        <mat-icon>home</mat-icon>
+        <span >Home</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="profile">
+        <mat-icon>person</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button mat-button class="menu-button" routerLink="groups">
+        <mat-icon>groups</mat-icon>
+        <span>Groups</span>
+      </button>
+  
+      <mat-divider></mat-divider>
+  
+      <button mat-button class="menu-button" (click)="logout()" [disabled]="loadLogout">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

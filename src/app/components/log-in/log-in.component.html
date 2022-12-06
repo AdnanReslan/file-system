@@ -1,0 +1,105 @@
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="flex flex-column" style="flex: 1">
+            <div class="text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="grid p-fluid">
+                <div class="col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+
+
+
+
+
+
+
+
+
+<body>
+	<div class="container">
+		<h3 routerLink="/register" style="color: white;position:absolute;top:35%;text-align:center;width: 98vw;text-decoration: underline;cursor: pointer;font-weight: bold;">OR Register</h3>
+        <form [formGroup]="loginForm" style="
+         display: block;
+         width: 30%;
+        margin-left: 35%;
+        margin-right: 35%;
+        min-width:300px ;
+        position: absolute;
+        bottom: 5%;">
+
+            <mat-card >
+                <mat-card-header style="justify-content: center; background-color: #665851;color: white;">
+                  <mat-card-title >LOG IN</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content style="margin-top:2rem ;">
+                    <div style="text-align: center;position: relative;">
+                        <mat-form-field appearance="fill" style="width:80% ;">
+                            <mat-label>Enter your email</mat-label>
+                            <input matInput placeholder="pat@example.com" formControlName="email" type="email">
+                            <mat-error *ngIf="loginForm.get('email')!.hasError('required') &&
+                            loginForm.get('email')!.touched">Email is required</mat-error>
+                            <mat-error
+                            class="small-font"
+                            *ngIf="
+                            loginForm.get('email')!.hasError('email') &&
+                            loginForm.get('email')!.touched
+                            "
+                          >
+                           Email is not valid
+                          </mat-error>
+                          </mat-form-field>
+                        </div>
+                       
+                        <div style="text-align: center;position: relative;">
+                        <mat-form-field appearance="fill"  style="width:80% ;">
+                            <mat-label>Enter your password</mat-label>
+                            <input formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+                            <mat-error *ngIf="loginForm.get('password')!.hasError('required') &&
+                            loginForm.get('password')!.touched">Password required</mat-error>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                          </mat-form-field>
+                        
+                        </div>
+                </mat-card-content>
+                <mat-card-actions  style="justify-content: center;">
+              
+                        <button mat-raised-button style=" background-color: #665851;color: white;" [disabled]="loginLoad" (click)="onSubmit()">
+                            <span *ngIf="!loginLoad">Login</span>
+                            <p-progressSpinner *ngIf="loginLoad" strokeWidth="8" [style]="{width: '25px', height: '25px'}">
+                            </p-progressSpinner>
+                        </button>
+               
+                 
+
+                
+                </mat-card-actions>
+              </mat-card>
+
+            
+
+            
+
+        </form>
+
+
+	</div>
+</body>
