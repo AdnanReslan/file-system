@@ -65,6 +65,7 @@ export class RegisterComponent {
           this.tokenAuthService.setTokenStorage(res)
           this.showSuccess(res.message)
           this.registerForm.reset()
+          this.router.navigate(['login'])
         }, error: (error : any) => {
           console.log(error);
           this.registerLoad = false
