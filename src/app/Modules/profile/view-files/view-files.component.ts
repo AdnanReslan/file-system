@@ -36,7 +36,7 @@ export class ViewFilesComponent implements OnInit {
   //
   getFiles() {
     let userId: any = ls.get('id')
-    this.fileServices.getFiles(userId).subscribe({
+    this.fileServices.getAllFiles(userId).subscribe({
       next: (res: any) => {
         this.filesArray = res.data.data
       },

@@ -12,8 +12,14 @@ export class FilesService {
 
 
     //
-    getFiles(userId:string){
+    getAllFiles(userId:string){
         return this.http.get<any>(environment.urlAPI+'file?user_id='+userId)
+    }
+
+
+    //
+    getFreeFiles(userId:string){
+        return this.http.get<any>(environment.urlAPI+'file?user_id='+userId+'&group_id')
     }
 
 

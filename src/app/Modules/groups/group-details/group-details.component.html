@@ -15,12 +15,20 @@
 
     <div class="row">
         <div class="col">
-            <button mat-flat-button class="add-file-btn">Add file</button>
+            <button mat-flat-button [matMenuTriggerFor]="menuFile" class="add-file-btn">Add file
+                <mat-icon>expand_more</mat-icon>
+            </button>
+            <mat-menu #menuFile="matMenu">
+                <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
+                  (click)="confirmAdded(fileFree.id)" >{{fileFree.name}}</button>
+            </mat-menu>
+
         </div>
 
     </div>
     <br>
-    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+        rejectButtonStyleClass="p-button-text"></p-confirmDialog>
     <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
         <div class="col-md-auto">
             <img src="assets/images/Clipboard.svg" class="file-icon" alt="file">
@@ -28,12 +36,13 @@
         <div class="col-md-12">
             <span class="file-name">{{file.name}}</span>
 
-            <button *ngIf="file.status==1" mat-flat-button class="cheeck-btn"  color="primary">Check in</button>
-            <button *ngIf="file.status==0" mat-flat-button class="cheeck-btn" color="primary">Check out</button>
-
             <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
+
+            <button *ngIf="file.status==1" mat-flat-button class="cheeck-btn" color="primary">Check in</button>
+            <button *ngIf="file.status==0" mat-flat-button class="cheeck-btn" color="primary">Check out</button>
+
             <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="confirmDeleted(file.id)">Delete</button>
             </mat-menu>
