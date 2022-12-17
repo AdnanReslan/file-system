@@ -33,7 +33,11 @@ export class HomeComponent implements OnInit,AfterViewInit {
                   }
                 
                 });
-                this.router.navigate(['/home/profile'])
+              
+                if(this.router.url=='/home'){
+                  this.router.navigate(['/home/profile'])
+                }
+                
                 ls.config.encrypt = true;
               }
 
