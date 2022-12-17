@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="!loadGroup">
-
+   
     <div class="row">
 
         <div class="col-md-12">
@@ -13,46 +13,101 @@
 
     </div>
 
-    <div class="row">
-        <div class="col">
-            <button mat-flat-button [matMenuTriggerFor]="menuFile" class="add-file-btn">Add file
-                <mat-icon>expand_more</mat-icon>
-            </button>
-            <mat-menu #menuFile="matMenu">
-                <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
-                  (click)="confirmAdded(fileFree.id)" >{{fileFree.name}}</button>
-            </mat-menu>
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Files">
+            <div class="row">
+                <div class="col">
+                    <button mat-flat-button [matMenuTriggerFor]="menuFile" class="add-file-btn">Add file
+                        <mat-icon>expand_more</mat-icon>
+                    </button>
+                    <mat-menu #menuFile="matMenu">
+                        <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
+                          (click)="confirmAddedFile(fileFree.id)" >{{fileFree.name}}</button>
+                    </mat-menu>
+        
+                </div>
+        
+            </div>
+            <br>
+           
+            <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
+                <div class="col-md-auto">
+                    <img src="assets/images/Clipboard.svg" class="file-icon" alt="file">
+                </div>
+                <div class="col-md">
+                    <span class="file-name">{{file.name}}</span>
+        
+                    <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+        
+                    <button *ngIf="file.status==1" mat-flat-button class="cheeck-btn" color="primary">Check in</button>
+                    <button *ngIf="file.status==0" mat-flat-button class="cheeck-btn" color="primary">Check out</button>
+        
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="confirmDeletedFile(file.id)">Delete</button>
+                    </mat-menu>
+                </div>
+        
+            </div>
+        
+        </mat-tab>
 
-        </div>
-
-    </div>
-    <br>
-    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
-        rejectButtonStyleClass="p-button-text"></p-confirmDialog>
-    <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
-        <div class="col-md-auto">
-            <img src="assets/images/Clipboard.svg" class="file-icon" alt="file">
-        </div>
-        <div class="col-md-12">
-            <span class="file-name">{{file.name}}</span>
-
-            <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-
-            <button *ngIf="file.status==1" mat-flat-button class="cheeck-btn" color="primary">Check in</button>
-            <button *ngIf="file.status==0" mat-flat-button class="cheeck-btn" color="primary">Check out</button>
-
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="confirmDeleted(file.id)">Delete</button>
-            </mat-menu>
-        </div>
-
-    </div>
 
 
 
+        <mat-tab label="Users">
+           
+            <div class="row">
+                <div class="col-md-12">
+                  <button mat-flat-button class="add-file-btn" (click)="showUserAvivableDialog()">Add new users</button>
+                </div>
+            </div>
 
+            <div class="row" *ngFor="let user of group.users">
+                <div class="col-md-12">
+                 <img src="assets/images/unknow.jfif" class="user-img" >
+                 <span class="user-name">{{user.name}}</span>
+
+                 <button mat-icon-button [matMenuTriggerFor]="menuUser" >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menuUser="matMenu">
+                    <button mat-menu-item (click)="confirmDeletedUser(user.id)">
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </div>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
 </div>
 
 <!--   -->
+
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+
+
+<p-dialog header="Add new users" [(visible)]="displayUserModal" [modal]="true" [style]="{width: '30vw'}"
+    [draggable]="false" [resizable]="false">
+
+    <div class="row">
+        <div class="col-md-12">
+            <input (keyup)="applyFilter($event)" type="text" pInputText placeholder="Search">
+        </div>
+    </div>
+ 
+    <div class="row" *ngFor="let userAvivable of userAvivableArray">
+        <div class="col-md-12">
+            <img src="assets/images/unknow.jfif" class="user-img" alt="user-photo">
+            <span>{{userAvivable.name}}</span>
+
+            <button (click)="addUserToGroup(userAvivable.id)" mat-mini-fab color="primary" style="float: right;" >
+                <mat-icon>plus</mat-icon>
+              </button>
+        </div>
+    </div>
+        
+</p-dialog>

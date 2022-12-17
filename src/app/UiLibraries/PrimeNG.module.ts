@@ -33,6 +33,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {ColorPickerModule} from 'primeng/colorpicker';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
 @NgModule({
   declarations: [],
   providers: [],
@@ -71,6 +72,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ColorPickerModule,
     FileUploadModule,
     ConfirmDialogModule,
+    DialogModule
     ],
   exports:[
     ButtonModule,
@@ -105,7 +107,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
     ScrollPanelModule,
     ColorPickerModule,
     FileUploadModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule
   ]
 })
 export class PrimeNGModule { }

@@ -31,3 +31,14 @@
     margin-top: 20px;
     float: right;
 }
+
+.user-name{
+    margin-left: 10px;
+    color: black;
+    font-size: large;
+}
+
+.user-img{
+    width: 60px;
+    height: 60px;
+}

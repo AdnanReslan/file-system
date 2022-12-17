@@ -5,6 +5,7 @@ import { ToastComponent } from 'src/app/sheared/toast/toast.component';
 import { ConfirmationService, ConfirmEventType } from 'primeng/api';
 import { FilesService } from 'src/app/core/services/files.services';
 import ls from 'localstorage-slim';
+import { UsersService } from 'src/app/core/services/users.services';
 @Component({
   selector: 'app-group-details',
   templateUrl: './group-details.component.html',
@@ -19,14 +20,17 @@ export class GroupDetailsComponent implements OnInit {
   addedFileId!: string;
   deletedFileId!: string;
   fileIdDeleted!: string;
-  fileFreeArray:any[]=[]
+  fileFreeArray:any[]=[];
+  displayUserModal:boolean = false
+  userAvivableArray:any[]=[]
 
   //
   constructor(private groupService: GroupsService,
     private fileServices: FilesService,
     private route: ActivatedRoute,
     private toast: ToastComponent,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private userServices : UsersService) {
     ls.config.encrypt = true;
     this.groupId = this.route.snapshot.params['id'];
   }
@@ -68,7 +72,7 @@ export class GroupDetailsComponent implements OnInit {
 
 
   //
-  confirmAdded(fileId : number) {
+  confirmAddedFile(fileId : number) {
     this.confirmationService.confirm({
         message: 'Are you sure that you want to added this file to group?',
         header: 'Confirmation',
@@ -109,7 +113,7 @@ export class GroupDetailsComponent implements OnInit {
 
 
   //
-  confirmDeleted(fileId: number) {
+  confirmDeletedFile(fileId: number) {
     console.log(fileId);
     this.confirmationService.confirm({
       message: 'Do you want to delete this file?',
@@ -148,6 +152,89 @@ export class GroupDetailsComponent implements OnInit {
         this.showError('File not delete successfuly')
       }
 
+    })
+  }
+
+
+
+  //
+  showUserAvivableDialog(){
+    this.displayUserModal=true
+    this.getAvivableUserToAdd('')
+  }
+
+
+  //
+  getAvivableUserToAdd(search : string){
+    this.userServices.getAvivableUser(this.groupId,search).subscribe({
+      next:(res : any)=>{
+        this.userAvivableArray=res.data.data
+      },
+      error:(error : any)=>{
+
+      }
+    })
+  }
+
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.getAvivableUserToAdd(filterValue)
+  }
+
+
+  //
+  addUserToGroup(userId : string){
+    let data = new FormData()
+    data.append('user_id',userId)
+    this.userServices.addUserToGroup(data,this.groupId).subscribe({
+      next:(res : any)=>{
+        this.getGroup()
+        this.showSuccess('User Added successfuly to group')
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+
+  //
+  confirmDeletedUser(userId: number) {
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this User from group?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.deleteUserFromGroup(userId.toString());
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+
+            break;
+          case ConfirmEventType.CANCEL:
+
+            break;
+        }
+      }
+    });
+  }
+
+
+  //
+  deleteUserFromGroup(userId : string){
+    let data = new FormData()
+    data.append('user_id',userId)
+    this.userServices.deleteUserFromGroup(data,this.groupId).subscribe({
+      next:(res : any)=>{
+        this.getGroup()
+        this.showSuccess('User deleted successfuly to group')
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
     })
   }
 
