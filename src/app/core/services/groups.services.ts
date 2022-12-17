@@ -12,7 +12,7 @@ export class GroupsService {
 
     //
     getGroups(userId : string){
-        return this.http.get<any>(environment.urlAPI)
+        return this.http.get<any>(environment.urlAPI+'group?user_id='+userId)
     }
 
 

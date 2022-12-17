@@ -72,21 +72,22 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   confirmDeleted(fileId : number) {
+    console.log(fileId);
     this.confirmationService.confirm({
         message: 'Do you want to delete this file?',
         header: 'Delete Confirmation',
         icon: 'pi pi-info-circle',
         accept: () => {
           this.fileIdDeleted=fileId.toString()
-          this.deleteFileFromGroup()
+          this.deleteFileFromGroup(fileId.toString());
         },
         reject: (type : any) => {
             switch(type) {
                 case ConfirmEventType.REJECT:
-                    
+
                 break;
                 case ConfirmEventType.CANCEL:
-                    
+
                 break;
             }
         }
@@ -96,9 +97,9 @@ export class GroupDetailsComponent implements OnInit {
 
 
   //
-  deleteFileFromGroup(){
+  deleteFileFromGroup(fileId : string){
     let data = new FormData()
-    data.append('file_id',this.deletedFileId)
+    data.append('file_id',fileId)
     this.groupService.deleteFileFromGroup(data,this.groupId).subscribe({
       next:(res : any)=>{
         this.showSuccess('File deleted successfuly')

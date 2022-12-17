@@ -1,7 +1,7 @@
 <p-menubar [model]="items" >
     <div>
         <input type="text" pInputText placeholder="Search">
-       
+
     </div>
 </p-menubar>
 <br>
@@ -14,7 +14,7 @@
         <div class="col">
             <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
             <br>
-    
+
             <p-skeleton width="25%" styleClass="mb-2"></p-skeleton>
             <br>
             <p-skeleton width="12%"></p-skeleton>
@@ -29,10 +29,10 @@
 
     <div class="row" *ngFor="let group of groupsArray">
         <div class="col-md-auto ">
-            <span class="group-color" [ngStyle]="{'background-color': group.data.color} "></span> 
+            <span class="group-color" [ngStyle]="{'background-color': group.color} "></span>
         </div>
-        <div class="col-md-auto  col-group-name" style="padding: 0px;" routerLink="details/{{group.data.id}}">
-            <span class="group-name">{{group.data.name}}</span>
+        <div class="col-md-auto  col-group-name" style="padding: 0px;" routerLink="details/{{group.id}}">
+            <span class="group-name">{{group.name}}</span>
         </div>
     </div>
 

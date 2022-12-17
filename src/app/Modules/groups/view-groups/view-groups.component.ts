@@ -36,9 +36,9 @@ export class ViewGroupsComponent implements OnInit {
       ];
 
       this.getGroups()
-  }   
-  
-  
+  }
+
+
   //
   addGroup(index : number){
     var data;
@@ -48,7 +48,7 @@ export class ViewGroupsComponent implements OnInit {
     // else{
     //   var data : any = this.PatientsArray.find(item => item.PatID == index.toString());
     // }
-   
+
     this.dialog.open(AddGroupComponent,{data :{ courier: data },width:'400px'}).afterClosed()
     .subscribe((val) => {
       if (!val ) {
@@ -56,8 +56,8 @@ export class ViewGroupsComponent implements OnInit {
       }
       if (val["isUpdated"]) {
         this.getGroups()
-      
-      } 
+
+      }
       else if(val["isAdded"]){
         this.getGroups()
       }
@@ -71,7 +71,8 @@ export class ViewGroupsComponent implements OnInit {
     let userId : any = ls.get('id')
     this.groupService.getGroups(userId).subscribe({
       next:(res : any)=>{
-        this.groupsArray=res.data
+        this.groupsArray=res.data.data;
+        console.log(this.groupsArray)
         this.loadGroups=false
       },
       error:(error : any)=>{
