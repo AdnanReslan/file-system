@@ -1,0 +1,33 @@
+.group-color {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.center-align{
+    text-align: center;
+}
+
+.add-file-btn{
+    float:right;
+    color: white;
+    background-color: #0511F2;
+  
+}
+
+.file-icon{
+    width: 60px;
+    height: 60px;
+}
+
+.file-name{
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.cheeck-btn{
+    margin-top: 20px;
+    float: right;
+}

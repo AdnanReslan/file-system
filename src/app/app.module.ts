@@ -13,13 +13,15 @@ import { PrimeNGModule } from './UiLibraries/PrimeNG.module';
 import { MaterialModule } from './UiLibraries/Material.module';
 import { MessageService } from 'primeng/api';
 import { NotFound404Component } from './components/not-found404/not-found404.component';
+import { ToastComponent } from './sheared/toast/toast.component';
 @NgModule({
   declarations: [
     AppComponent,
     LogInComponent,
     HomeComponent,
     RegisterComponent,
-    NotFound404Component
+    NotFound404Component,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,10 @@ import { NotFound404Component } from './components/not-found404/not-found404.com
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHeaderInterceptor,
     multi: true,
-  }],
+  },
+  MessageService,
+  ToastComponent],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

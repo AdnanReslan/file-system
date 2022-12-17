@@ -1,0 +1,53 @@
+
+
+
+<mat-dialog-content class="mat-typography">
+    <h3 class="title">{{getTitle()}}</h3>
+
+    <form   [formGroup]="addGroup">
+
+        <div class="row" >
+            <div class="col-md-1" ></div>
+          <div class="col-md-10" >
+            <mat-form-field  style="width:100%; " appearance="outline">
+              <mat-label  >First Name</mat-label>
+              <input    matInput formControlName="name" >
+              <mat-error  *ngIf="addGroup.get('name')!.hasError('required')">
+               Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-1" ></div>
+        </div>
+
+
+   
+    </form>
+
+    <div class="row" >
+        <div class="col-md-1" ></div>
+        <div class="col-md-2 color-div"  >
+         
+        <span class="label">color:</span>   
+         
+        </div>
+        <div class="col-md-8">
+            <p-colorPicker [(ngModel)]="colorSelected" [inline]="true"></p-colorPicker>
+        </div>
+        <div class="col-md-1" ></div>
+      </div>
+
+      <br>  <br>
+      <div class="row">
+        <div class="col" >
+         <button class="send-btn" color="primary"
+          mat-flat-button (click)="onAddNewGroup() "
+          [disabled]="loadingSpiner">Send</button>
+         <button class="close-btn" color="warn"
+          mat-flat-button (click)="closeDialog()"
+          [disabled]="loadingSpiner">Close</button>
+        </div>
+      </div>
+
+
+</mat-dialog-content>

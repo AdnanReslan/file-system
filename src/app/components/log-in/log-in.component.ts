@@ -4,13 +4,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { TokenAuthService } from 'src/app/core/auth/token.service';
+import { ToastComponent } from 'src/app/sheared/toast/toast.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
   loginForm!: FormGroup;
@@ -20,8 +20,7 @@ export class LogInComponent implements OnInit {
   constructor(private http: HttpClient,
     private router: Router,
     private tokenAuthService: TokenAuthService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private toast: ToastComponent,
   ) {
 
   }
@@ -29,7 +28,6 @@ export class LogInComponent implements OnInit {
 
   //  
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl(null, [Validators.required,]),
@@ -57,6 +55,7 @@ export class LogInComponent implements OnInit {
         next: (res: any) => {
           this.loginLoad = false
           this.tokenAuthService.setTokenStorage(res.data.token)
+          this.tokenAuthService.setUserData(res.data.name,res.data.id,res.data.email,res.data.role)
           this.showSuccess(res.message)
           this.router.navigate(['/home'])
         }, error: (error : any) => {
@@ -75,27 +74,27 @@ export class LogInComponent implements OnInit {
 
 
   showSuccess(message : string) {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+    this.toast.messageService.add({ severity: 'success', summary: 'Success', detail: message });
   }
 
 
 
   showError(message : string) {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+    this.toast.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 
 
   onConfirm() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   onReject() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   clear() {
-    this.messageService.clear();
+    this.toast.messageService.clear();
   }
 
 }

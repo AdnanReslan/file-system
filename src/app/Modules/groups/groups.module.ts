@@ -6,16 +6,23 @@ import { ViewGroupsComponent } from './view-groups/view-groups.component';
 import { MaterialModule } from 'src/app/UiLibraries/Material.module';
 import { PrimeNGModule } from 'src/app/UiLibraries/PrimeNG.module';
 import {MenuItem} from 'primeng/api';
-
+import { AddGroupComponent } from './add-group/add-group.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GroupDetailsComponent } from './group-details/group-details.component';
 @NgModule({
-  declarations: [
-    ViewGroupsComponent
-  ],
-  imports: [
-    CommonModule,
-    GroupsRoutingModule,
-    PrimeNGModule,
-    MaterialModule,
-  ]
+    declarations: [
+        ViewGroupsComponent,
+        AddGroupComponent,
+        GroupDetailsComponent
+    ],
+    imports: [
+        CommonModule,
+        GroupsRoutingModule,
+        PrimeNGModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        
+    ]
 })
 export class GroupsModule { }

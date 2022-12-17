@@ -4,12 +4,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { TokenAuthService } from 'src/app/core/auth/token.service';
+import { ToastComponent } from 'src/app/sheared/toast/toast.component';
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./register.component.css']
 })
 
 
@@ -23,15 +23,13 @@ export class RegisterComponent {
   constructor(private http: HttpClient,
     private router: Router,
     private tokenAuthService: TokenAuthService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private toast: ToastComponent,
   ) {
 
   }
 
   //  
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
     this.registerForm = new FormGroup({
       'name': new FormControl(null, [Validators.required]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
@@ -62,10 +60,10 @@ export class RegisterComponent {
       .subscribe({
         next: (res: any) => {
           this.registerLoad = false
-          this.tokenAuthService.setTokenStorage(res)
+          this.tokenAuthService.setTokenStorage(res.data.token)
+          this.tokenAuthService.setUserData(res.data.name,res.data.id,res.data.email,res.data.role)
           this.showSuccess(res.message)
-          this.registerForm.reset()
-          this.router.navigate(['login'])
+          this.router.navigate(['/home'])
         }, error: (error : any) => {
           console.log(error);
           this.registerLoad = false
@@ -84,27 +82,27 @@ export class RegisterComponent {
 
 
   showSuccess(message : string) {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+    this.toast.messageService.add({ severity: 'success', summary: 'Success', detail: message });
   }
 
 
 
   showError(message : string) {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+    this.toast.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 
 
   onConfirm() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   onReject() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   clear() {
-    this.messageService.clear();
+    this.toast.messageService.clear();
   }
 
 }

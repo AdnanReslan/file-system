@@ -1,32 +1,46 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { delay, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {untilDestroyed } from '@ngneat/until-destroy';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { ToastComponent } from 'src/app/sheared/toast/toast.component';
+import ls from 'localstorage-slim';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  providers: [MessageService]
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit,AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   loadLogout : boolean = false;
+  url!:string;
+  userName!:any
   constructor(private observer: BreakpointObserver, 
               private router: Router,
               private http : HttpClient,
-              private messageService: MessageService,
-    private primengConfig: PrimeNGConfig) {}
+              private toast: ToastComponent,
+              ) {
+                router.events
+                .pipe(filter((event) => event instanceof NavigationEnd))
+                .subscribe((event: any) => {
+                  this.url = event.url.toString();
+                  if(this.url=='/home'){
+                    this.router.navigate(['/home/profile'])
+                  }
+                
+                });
+                this.router.navigate(['/home/profile'])
+                ls.config.encrypt = true;
+              }
 
 
   //
   ngOnInit(){
-    this.primengConfig.ripple = true;
+       this.userName=ls.get('name')
   }
 
 
@@ -77,26 +91,26 @@ export class HomeComponent implements OnInit,AfterViewInit {
 
   //
   showSuccess(message : string) {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+    this.toast.messageService.add({ severity: 'success', summary: 'Success', detail: message });
   }
 
 
 
   showError(message : string) {
-    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+    this.toast.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 
 
   onConfirm() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   onReject() {
-    this.messageService.clear('c');
+    this.toast.messageService.clear('c');
   }
 
   clear() {
-    this.messageService.clear();
+    this.toast.messageService.clear();
   }
 }

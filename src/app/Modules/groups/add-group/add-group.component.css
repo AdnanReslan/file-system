@@ -1,0 +1,26 @@
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.label {
+    color: black;
+    font-weight: bold;
+   
+}
+
+.color-div {
+    position: relative;
+    margin-top: 20px;
+}
+
+
+.send-btn{
+float: right;
+}
+
+.close-btn{
+    float: right;
+    margin-right: 10px;
+}

@@ -30,6 +30,9 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {MenubarModule} from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {ColorPickerModule} from 'primeng/colorpicker';
+import {FileUploadModule} from 'primeng/fileupload';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 @NgModule({
   declarations: [],
   providers: [],
@@ -64,7 +67,10 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     SkeletonModule,
     MenubarModule,
     InputTextModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    ColorPickerModule,
+    FileUploadModule,
+    ConfirmDialogModule,
     ],
   exports:[
     ButtonModule,
@@ -96,7 +102,10 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
     SkeletonModule,
     MenubarModule,
     InputTextModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    ColorPickerModule,
+    FileUploadModule,
+    ConfirmDialogModule
   ]
 })
 export class PrimeNGModule { }

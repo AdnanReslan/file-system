@@ -1,0 +1,26 @@
+<div class="card">
+
+    <p-fileUpload name="file" (onSelect)="onSelectEvent($event)" (uploadHandler)="sendToServer()" [customUpload]="true"
+        (onUpload)="onUpload($event)" [multiple]="false" [maxFileSize]="1000000" [showUploadButton]="true">
+        <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+            </ul>
+        </ng-template>
+    </p-fileUpload>
+</div>
+<!--  -->
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<div class="row" *ngFor="let file of filesArray" style="margin-top: 15px;">
+    <div class="col-md-12">
+        <span class="file-name">{{file.name}}</span>
+        <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="confirmDeleted(file.id)">Delete</button>
+        </mat-menu>
+    </div>
+</div>
+
+
