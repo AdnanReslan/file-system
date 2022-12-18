@@ -34,4 +34,16 @@ export class FilesService {
         return this.http.delete(environment.urlAPI+'file/'+fileId)
     }
 
+
+    //
+    checkIn(data : any){
+        return this.http.post(environment.urlAPI+'files/check-in',data)
+    }
+
+
+    //
+    checkOut(data : any){
+        return this.http.post(environment.urlAPI+'files/check-out',data)
+    }
+
 }

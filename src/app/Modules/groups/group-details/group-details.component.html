@@ -36,13 +36,23 @@
                 </div>
                 <div class="col-md">
                     <span class="file-name">{{file.name}}</span>
+
+                    <mat-icon *ngIf="file.locked_by" style="color: red;">lock</mat-icon>
+
+                    <span *ngIf="file.status==2 && file.locked_by.id==userId">locked by you</span>
+
+                    <span *ngIf="file.status==2 && file.locked_by.id!=userId">locked by {{ file.locked_by.name}}</span>
+
+                    <mat-icon *ngIf="!file.locked_by" style="color: green;">lock_open</mat-icon>
         
                     <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
         
-                    <button *ngIf="file.status==1" mat-flat-button class="cheeck-btn" color="primary">Check in</button>
-                    <button *ngIf="file.status==0" mat-flat-button class="cheeck-btn" color="primary">Check out</button>
+                    <button *ngIf="file.status==1" (click)="checkIn(file.id)"
+                    mat-flat-button class="cheeck-btn" color="primary">Check in</button>
+                    <button *ngIf="file.status==2 && file.locked_by.id==userId" (click)="checkOut(file.id)" 
+                    mat-flat-button class="cheeck-btn" color="primary">Check out</button>
         
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="confirmDeletedFile(file.id)">Delete</button>
@@ -111,3 +121,5 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
     </div>
         
 </p-dialog>
+
+

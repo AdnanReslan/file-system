@@ -23,6 +23,7 @@ export class GroupDetailsComponent implements OnInit {
   fileFreeArray:any[]=[];
   displayUserModal:boolean = false
   userAvivableArray:any[]=[]
+  userId!:any
 
   //
   constructor(private groupService: GroupsService,
@@ -33,6 +34,7 @@ export class GroupDetailsComponent implements OnInit {
     private userServices : UsersService) {
     ls.config.encrypt = true;
     this.groupId = this.route.snapshot.params['id'];
+    this.userId=ls.get('id')
   }
 
 
@@ -231,6 +233,36 @@ export class GroupDetailsComponent implements OnInit {
       next:(res : any)=>{
         this.getGroup()
         this.showSuccess('User deleted successfuly to group')
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  //
+  checkIn(fileId : number){
+    let data = new FormData();
+    data.append('files[0]',fileId.toString())
+    this.fileServices.checkIn(data).subscribe({
+      next:(res : any)=>{
+         this.showSuccess('File has been check in successfuly')
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  //
+  checkOut(fileId : number){
+    let data = new FormData();
+    data.append('files[0]',fileId.toString())
+    this.fileServices.checkOut(data).subscribe({
+      next:(res : any)=>{
+        this.showSuccess('File has been check out successfuly')
       },
       error:(error : any)=>{
         this.showError(error.error.message)
