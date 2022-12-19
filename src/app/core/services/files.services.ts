@@ -30,6 +30,18 @@ export class FilesService {
 
 
     //
+    getFileContent(fileID : string){
+        return this.http.get<any>(environment.urlAPI+'file/'+fileID)
+    }
+
+
+    //
+    updateFileContent(fileID : string,data : any){
+         return this.http.put(environment.urlAPI+'file/'+fileID,data)
+    }
+
+
+    //
     uploadFile(data : any){
         return this.http.post(environment.urlAPI+'file',data)
     }

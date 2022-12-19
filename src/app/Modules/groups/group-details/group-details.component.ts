@@ -23,11 +23,13 @@ export class GroupDetailsComponent implements OnInit {
   fileFreeArray:any[]=[];
   displayUserModal:boolean = false
   displayLogFileModal:boolean = false
+  displayEditFileModal:boolean = false
   userAvivableArray:any[]=[]
   userId!:any
   fileLogesArray:any[]=[]
   selectedFiles:any[]=[]
-
+  contentFile:string=''
+  fileIdEdit!:number
   //
   constructor(private groupService: GroupsService,
     private fileServices: FilesService,
@@ -65,7 +67,7 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   getFileLoges(fileID : number){
-    this.displayLogFileModal=true
+    
     this.groupService.getGroup(this.groupId).subscribe({
       next: (res: any) => {
         for(let i=0 ; i<res.data.files.length ; i++){
@@ -76,6 +78,7 @@ export class GroupDetailsComponent implements OnInit {
           }
         }
         }
+        this.displayLogFileModal=true
       },
       error: (error: any) => {
         this.loadGroup = false
@@ -338,6 +341,37 @@ export class GroupDetailsComponent implements OnInit {
       next:(res : any)=>{
         this.showSuccess('Files has been check out successfuly')
         this.getGroup()
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  //
+  getFileContent(fileID : number){
+    this.fileIdEdit=fileID
+    this.fileServices.getFileContent(fileID.toString()).subscribe({
+      next:(res : any)=>{
+        this.contentFile=res.data.content
+        this.displayEditFileModal=true
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  //
+  updateFileContent(){
+    let data = new FormData()
+    data.append('content',this.contentFile)
+    this.fileServices.updateFileContent(this.fileIdEdit.toString(),data).subscribe({
+      next:(res : any)=>{
+        this.showSuccess('File Update Successfuly')
+        this.displayEditFileModal=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)

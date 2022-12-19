@@ -1,7 +1,7 @@
 <div class="card">
 
     <p-fileUpload name="file" (onSelect)="onSelectEvent($event)" (uploadHandler)="sendToServer()" [customUpload]="true"
-        (onUpload)="onUpload($event)" accept="txt/*" [multiple]="true" [maxFileSize]="1000000" [showUploadButton]="true">
+        (onUpload)="onUpload($event)" accept=".txt" [multiple]="true" [maxFileSize]="1000000" [showUploadButton]="true">
         <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length">
                 <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

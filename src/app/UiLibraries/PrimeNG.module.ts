@@ -34,6 +34,7 @@ import {ColorPickerModule} from 'primeng/colorpicker';
 import {FileUploadModule} from 'primeng/fileupload';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
+import {EditorModule} from 'primeng/editor';
 @NgModule({
   declarations: [],
   providers: [],
@@ -72,7 +73,8 @@ import {DialogModule} from 'primeng/dialog';
     ColorPickerModule,
     FileUploadModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    EditorModule
     ],
   exports:[
     ButtonModule,
@@ -108,7 +110,8 @@ import {DialogModule} from 'primeng/dialog';
     ColorPickerModule,
     FileUploadModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    EditorModule
   ]
 })
 export class PrimeNGModule { }
