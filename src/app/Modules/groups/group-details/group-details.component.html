@@ -21,21 +21,25 @@
                         <mat-icon>expand_more</mat-icon>
                     </button>
                     <mat-menu #menuFile="matMenu">
+                        <span style="padding-left: 10px;" *ngIf="fileFreeArray.length==0">No Files</span>
                         <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
                           (click)="confirmAddedFile(fileFree.id)" >{{fileFree.name}}</button>
                     </mat-menu>
                 </div>
             </div>
             <br>
-           <div class="row">
+           <div class="row" style="margin-bottom: 30px;">
             <div class="col">
                 <button  (click)="checkInAll()"
                 mat-flat-button class="check-in-all" color="primary">Check in selected</button>
+
+
                 <button  (click)="checkOutAll()"
                 mat-flat-button  color="primary">Check out selected</button>
+
             </div>
            </div>
-            <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
+            <div class="row" style="margin-bottom: 25px;" *ngFor="let file of group.files">
                 <div class="col-md-auto">
                     <mat-checkbox
                     (click)="editCheckArray(file.id)"
@@ -50,17 +54,25 @@
 
                     <span class="file-name">{{file.name}}</span>
 
-                    <mat-icon *ngIf="file.locked_by" style="color: red;">lock</mat-icon>
-
-                    <span *ngIf="file.status==2 && file?.locked_by?.id==userId">locked by you</span>
-
-                    <span *ngIf="file.status==2 && file?.locked_by?.id!=userId">locked by {{ file?.locked_by?.name}}</span>
-
-                    <mat-icon *ngIf="!file?.locked_by" style="color: green;">lock_open</mat-icon>
 
                     <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
+
+                    <span *ngIf="file.status==2 && file?.locked_by?.id==userId" style="float: right;margin:0px 10px ;">locked by you</span>
+
+                    <span *ngIf="file.status==2 && file?.locked_by?.id!=userId" style="float: right;margin:0px 10px ;">locked by {{ file?.locked_by?.name}}</span>
+
+                    <mat-icon *ngIf="file.locked_by" style="color: red; float: right;margin:0px 10px ;">lock</mat-icon>
+
+                    <mat-icon *ngIf="!file?.locked_by" style="color: green; float: right;margin:0px 10px ;">lock_open</mat-icon>
+
+
+                 
+
+                    
+
+                  
 
                     <button *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="getFileContent(file.id)"
                     mat-flat-button class="cheeck-btn" color="accent">Edit</button>
@@ -84,18 +96,19 @@
 
         <mat-tab label="Users">
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row" style="margin: 20px 0px;" >
+                <div class="col-md-12"  >
                   <button mat-flat-button class="add-file-btn" (click)="showUserAvivableDialog()">Add new users</button>
                 </div>
             </div>
-
-            <div class="row" *ngFor="let user of group.users">
-                <div class="col-md-12">
+            
+         
+            <div class="row" style="margin-bottom: 25px;" *ngFor="let user of group.users"  >
+                <div class="col-md-12" >
                  <img src="assets/images/unknow.jfif" class="user-img" >
                  <span class="user-name">{{user.name}}</span>
 
-                 <button mat-icon-button [matMenuTriggerFor]="menuUser" >
+                 <button mat-icon-button [matMenuTriggerFor]="menuUser" style="float: right;">
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menuUser="matMenu">
@@ -105,6 +118,8 @@
                   </mat-menu>
                 </div>
             </div>
+  
+        
         </mat-tab>
       </mat-tab-group>
 </div>
@@ -119,12 +134,12 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 <p-dialog header="Add new users" [(visible)]="displayUserModal" [modal]="true" [style]="{width: '30vw'}"
     [draggable]="false" [resizable]="false">
 
-    <div class="row">
+    <div class="row" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <input (keyup)="applyFilter($event)" type="text" pInputText placeholder="Search">
         </div>
     </div>
-    <div class="row" *ngFor="let userAvivable of userAvivableArray">
+    <div class="row" *ngFor="let userAvivable of userAvivableArray" style="margin-bottom: 20px;">
         <div class="col-md-12">
             <img src="assets/images/unknow.jfif" class="user-img" alt="user-photo">
             <span>{{userAvivable.name}}</span>

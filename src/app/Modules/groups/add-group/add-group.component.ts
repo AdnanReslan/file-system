@@ -12,7 +12,7 @@ import { ToastComponent } from 'src/app/sheared/toast/toast.component';
 export class AddGroupComponent implements  OnInit{
 
   addGroup !: FormGroup;
-  colorSelected!:string;
+  colorSelected:string='#ff0000';
   loadingSpiner:boolean=false
   //
   constructor( @Inject(MAT_DIALOG_DATA) public data: any,
@@ -59,13 +59,15 @@ export class AddGroupComponent implements  OnInit{
       let groupData = new FormData()
       groupData.append('name',this.addGroup.value.name);
       groupData.append('color',this.colorSelected)
-      alert(this.colorSelected)
       this.groupsService.addGroup(groupData).subscribe({
         next:(res : any)=>{
           this.loadingSpiner=false;
+          this.showSuccess("Group Added successfuly")
+          this.closeDialog()
         },
         error:(error : any)=>{
           this.loadingSpiner=false;
+          this.showError(error.error.message)
         }
       })
     }
@@ -91,7 +93,7 @@ export class AddGroupComponent implements  OnInit{
 
   //
   closeDialog(){
-    this.dialogRef.close()
+    this.dialogRef.close({isAdded:true})
   }
 
 

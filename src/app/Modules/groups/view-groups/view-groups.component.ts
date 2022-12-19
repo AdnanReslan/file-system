@@ -88,6 +88,7 @@ export class ViewGroupsComponent implements OnInit {
     this.groupService.deleteGroup(groupId.toString()).subscribe({
       next:(res : any)=>{
         this.showSuccess("Group deleted successfuly")
+        this.getGroups()
       },
       error:(error : any)=>{
          this.showError(error.error.message)

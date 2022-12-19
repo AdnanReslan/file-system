@@ -27,7 +27,7 @@
 
 <div class="container-fluid" *ngIf="!loadGroups">
 
-    <div class="row" *ngFor="let group of groupsArray">
+    <div class="row" *ngFor="let group of groupsArray" style="margin-bottom:30px ;">
         <div class="col-md-auto ">
             <span class="group-color" [ngStyle]="{'background-color': group.color} "></span>
         </div>
