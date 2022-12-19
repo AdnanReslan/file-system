@@ -44,4 +44,10 @@ export class GroupsService {
     deleteFileFromGroup(data : any , groupId : string){
         return this.http.post(environment.urlAPI+'group/'+groupId+'/delete-file',data)
     }
+
+
+    //
+    deleteGroup(groupId : string){
+        return this.http.delete(environment.urlAPI+'')
+    }
 }

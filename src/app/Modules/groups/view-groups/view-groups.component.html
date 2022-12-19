@@ -34,6 +34,17 @@
         <div class="col-md-auto  col-group-name" style="padding: 0px;" routerLink="details/{{group.id}}">
             <span class="group-name">{{group.name}}</span>
         </div>
+
+        <div class="col" style="float: right;">
+            <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="deletedGroup(group.id)">Delete</button>
+            </mat-menu>
+        </div>
+  
+    
     </div>
 
 </div>

@@ -4,6 +4,7 @@ import { GroupsService } from 'src/app/core/services/groups.services';
 import ls from 'localstorage-slim';
 import { MatDialog } from '@angular/material/dialog';
 import { AddGroupComponent } from '../add-group/add-group.component';
+import { ToastComponent } from 'src/app/sheared/toast/toast.component';
 @Component({
   selector: 'app-view-groups',
   templateUrl: './view-groups.component.html',
@@ -20,7 +21,8 @@ export class ViewGroupsComponent implements OnInit {
 
   //
   constructor(private groupService : GroupsService,
-    private dialog: MatDialog,){
+    private dialog: MatDialog,
+    private toast: ToastComponent,){
     ls.config.encrypt = true;
   }
 
@@ -80,4 +82,42 @@ export class ViewGroupsComponent implements OnInit {
       }
     })
   }
+
+
+  deletedGroup(groupId : number){
+    this.groupService.deleteGroup(groupId.toString()).subscribe({
+      next:(res : any)=>{
+        this.showSuccess("Group deleted successfuly")
+      },
+      error:(error : any)=>{
+         this.showError(error.error.message)
+      }
+    })
+  }
+
+
+    //
+    showSuccess(message: string) {
+      this.toast.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+    }
+  
+  
+  
+    showError(message: string) {
+      this.toast.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+    }
+  
+  
+  
+    onConfirm() {
+      this.toast.messageService.clear('c');
+    }
+  
+    onReject() {
+      this.toast.messageService.clear('c');
+    }
+  
+    clear() {
+      this.toast.messageService.clear();
+    }
 }
