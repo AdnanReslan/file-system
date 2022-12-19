@@ -61,7 +61,7 @@ export class RegisterComponent {
         next: (res: any) => {
           this.registerLoad = false
           this.tokenAuthService.setTokenStorage(res.data.token)
-          this.tokenAuthService.setUserData(res.data.name,res.data.id,res.data.email,res.data.role)
+          this.tokenAuthService.setUserData(res.data.name,res.data.id,res.data.email,res.data.type)
           this.showSuccess(res.message)
           this.router.navigate(['/home'])
         }, error: (error : any) => {

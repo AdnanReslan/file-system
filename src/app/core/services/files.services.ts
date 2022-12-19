@@ -12,6 +12,12 @@ export class FilesService {
 
 
     //
+    getAllFilesAdmin(){
+        return this.http.get<any>(environment.urlAPI+'file')
+    }
+
+
+    //
     getAllFiles(userId:string){
         return this.http.get<any>(environment.urlAPI+'file?user_id='+userId)
     }

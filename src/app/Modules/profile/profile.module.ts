@@ -6,11 +6,13 @@ import { ViewFilesComponent } from './view-files/view-files.component';
 import { PrimeNGModule } from 'src/app/UiLibraries/PrimeNG.module';
 import { MaterialModule } from 'src/app/UiLibraries/Material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AllFilesComponent } from './all-files/all-files.component';
 
 
 @NgModule({
   declarations: [
-    ViewFilesComponent
+    ViewFilesComponent,
+    AllFilesComponent
   ],
   imports: [
     CommonModule,

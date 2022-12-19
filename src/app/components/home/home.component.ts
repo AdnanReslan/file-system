@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
   loadLogout : boolean = false;
   url!:string;
   userName!:any
+  userType!:any
   constructor(private observer: BreakpointObserver, 
               private router: Router,
               private http : HttpClient,
@@ -45,6 +46,7 @@ export class HomeComponent implements OnInit,AfterViewInit {
   //
   ngOnInit(){
        this.userName=ls.get('name')
+       this.userType=ls.get('type')
   }
 
 

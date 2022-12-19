@@ -9,11 +9,13 @@ import {MenuItem} from 'primeng/api';
 import { AddGroupComponent } from './add-group/add-group.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GroupDetailsComponent } from './group-details/group-details.component';
+import { AllGroupsComponent } from './all-groups/all-groups.component';
 @NgModule({
     declarations: [
         ViewGroupsComponent,
         AddGroupComponent,
-        GroupDetailsComponent
+        GroupDetailsComponent,
+        AllGroupsComponent
     ],
     imports: [
         CommonModule,

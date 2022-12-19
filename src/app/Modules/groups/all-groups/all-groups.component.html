@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-12">
+          <h2>All Groups</h2>
+    </div>
+</div>
+
+
+<div class="container-fluid" *ngIf="loadGroups">
+
+    <div class="row" *ngFor="let item of skeltonLoderArray">
+        <div class="col">
+            <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+            <br>
+
+            <p-skeleton width="25%" styleClass="mb-2"></p-skeleton>
+            <br>
+            <p-skeleton width="12%"></p-skeleton>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="container-fluid" *ngIf="!loadGroups">
+<div class="row" *ngFor="let group of allGroupsArray">
+    <div class="col-md-auto ">
+        <span class="group-color" [ngStyle]="{'background-color': group.color} "></span>
+    </div>
+    <div class="col-md-auto  col-group-name" style="padding: 0px;" >
+        <span class="group-name">{{group.name}}</span>
+    </div>
+</div>
+
+<h2 style="text-align: center;" *ngIf="allGroupsArray.length==0">There is no groups</h2>
+</div>

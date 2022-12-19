@@ -1,0 +1,11 @@
+<div class="row" *ngFor="let file of allFilesArray" style="margin-top: 15px;">
+    <div class="col-md-12">
+        <span class="file-name">{{file.name}}</span>
+        <!-- <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="confirmDeleted(file.id)">Delete</button>
+        </mat-menu> -->
+    </div>
+</div>

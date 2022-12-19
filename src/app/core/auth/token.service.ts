@@ -21,11 +21,11 @@ export class TokenAuthService {
 
 
   // set user data
-  setUserData(name:string,id:string,email:string,role:string){
+  setUserData(name:string,id:string,email:string,type:string){
     ls.set('name',name)
     ls.set('id',id)
     ls.set('email',email)
-    ls.set('role',role)
+    ls.set('type',type)
   }
 
 
