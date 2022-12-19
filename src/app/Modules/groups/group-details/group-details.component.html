@@ -39,9 +39,9 @@
 
                     <mat-icon *ngIf="file.locked_by" style="color: red;">lock</mat-icon>
 
-                    <span *ngIf="file.status==2 && file.locked_by.id==userId">locked by you</span>
+                    <span *ngIf="file.status==2 && file.locked_by.user.id==userId">locked by you</span>
 
-                    <span *ngIf="file.status==2 && file.locked_by.id!=userId">locked by {{ file.locked_by.name}}</span>
+                    <span *ngIf="file.status==2 && file.locked_by.user.id!=userId">locked by {{ file.locked_by.user.name}}</span>
 
                     <mat-icon *ngIf="!file.locked_by" style="color: green;">lock_open</mat-icon>
         
@@ -51,11 +51,12 @@
         
                     <button *ngIf="file.status==1" (click)="checkIn(file.id)"
                     mat-flat-button class="cheeck-btn" color="primary">Check in</button>
-                    <button *ngIf="file.status==2 && file.locked_by.id==userId" (click)="checkOut(file.id)" 
+                    <button *ngIf="file.status==2 && file.locked_by.user.id==userId" (click)="checkOut(file.id)" 
                     mat-flat-button class="cheeck-btn" color="primary">Check out</button>
         
-                    <mat-menu #menu="matMenu">
+                    <mat-menu #menu="matMenu">getFileLoges
                         <button mat-menu-item (click)="confirmDeletedFile(file.id)">Delete</button>
+                        <button mat-menu-item (click)="getFileLoges(file.id)">Show log file</button>
                     </mat-menu>
                 </div>
         
@@ -99,7 +100,7 @@
 rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 
 
-
+<!-- User Dialog -->
 <p-dialog header="Add new users" [(visible)]="displayUserModal" [modal]="true" [style]="{width: '30vw'}"
     [draggable]="false" [resizable]="false">
 
@@ -108,7 +109,6 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
             <input (keyup)="applyFilter($event)" type="text" pInputText placeholder="Search">
         </div>
     </div>
- 
     <div class="row" *ngFor="let userAvivable of userAvivableArray">
         <div class="col-md-12">
             <img src="assets/images/unknow.jfif" class="user-img" alt="user-photo">
@@ -119,7 +119,25 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
               </button>
         </div>
     </div>
-        
 </p-dialog>
 
 
+<!-- File Log Dialog -->
+<p-dialog header="Long Content" [(visible)]="displayLogFileModal" [style]="{width: '50vw'}">
+    <div class="row" *ngFor="let log of fileLogesArray">
+             <div class="col-md-auto">
+                <span>Action: {{log.action}}</span>
+             </div>
+
+             <div class="col-md-auto">
+                <span>Edit by: {{log.user.name}}</span>
+             </div>
+
+             <div class="col-md-auto">
+                <span>Edit Date: {{log.updated_at}}</span>
+             </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayLogFileModal=false" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

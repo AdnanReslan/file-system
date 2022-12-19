@@ -22,8 +22,10 @@ export class GroupDetailsComponent implements OnInit {
   fileIdDeleted!: string;
   fileFreeArray:any[]=[];
   displayUserModal:boolean = false
+  displayLogFileModal:boolean = false
   userAvivableArray:any[]=[]
   userId!:any
+  fileLogesArray:any[]=[]
 
   //
   constructor(private groupService: GroupsService,
@@ -52,6 +54,27 @@ export class GroupDetailsComponent implements OnInit {
       next: (res: any) => {
         this.group = res.data
         this.loadGroup = false
+      },
+      error: (error: any) => {
+        this.loadGroup = false
+      }
+    })
+  }
+
+
+  //
+  getFileLoges(fileID : number){
+    this.displayLogFileModal=true
+    this.groupService.getGroup(this.groupId).subscribe({
+      next: (res: any) => {
+        for(let i=0 ; i<res.data.files.length ; i++){
+          if(fileID==res.data.files[i].id){
+            this.fileLogesArray=[]
+          for(let j=0 ; j<res.data.files.file_logs.length ; j++){
+              this.fileLogesArray.push(res.data.files[i].file_logs[j])
+          }
+        }
+        }
       },
       error: (error: any) => {
         this.loadGroup = false
