@@ -48,6 +48,6 @@ export class GroupsService {
 
     //
     deleteGroup(groupId : string){
-        return this.http.delete(environment.urlAPI+'')
+        return this.http.delete(environment.urlAPI+'group/'+ groupId);
     }
 }

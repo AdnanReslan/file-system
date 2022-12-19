@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlAPI:'http://192.168.43.113:8080/api/'
+  urlAPI:'http://file-system.mcs-sy.com/api/'
 };
 
 /*
