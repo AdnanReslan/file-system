@@ -59,10 +59,10 @@ export class ViewFilesComponent implements OnInit {
         reject: (type : any) => {
             switch(type) {
                 case ConfirmEventType.REJECT:
-                    
+
                 break;
                 case ConfirmEventType.CANCEL:
-                    
+
                 break;
             }
         }
@@ -70,7 +70,7 @@ export class ViewFilesComponent implements OnInit {
 }
 
 
-  
+
 
 
   //
@@ -81,7 +81,7 @@ export class ViewFilesComponent implements OnInit {
         this.getFiles()
       },
       error: (error: any) => {
-        this.showError('File not delete successfuly')
+        this.showError(error.error.message)
       }
     })
   }

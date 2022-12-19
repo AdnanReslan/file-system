@@ -29,7 +29,7 @@ export class AllGroupsComponent implements OnInit  {
     this.loadGroups=true
     this.groupServices.getAllGroups().subscribe({
       next:(res : any)=>{
-             this.allGroupsArray=res.data
+             this.allGroupsArray=res.data.data
              this.loadGroups=false
       },
       error:(error : any)=>{

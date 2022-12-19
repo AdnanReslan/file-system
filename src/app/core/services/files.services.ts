@@ -13,7 +13,7 @@ export class FilesService {
 
     //
     getAllFilesAdmin(){
-        return this.http.get<any>(environment.urlAPI+'file')
+        return this.http.get<any>(environment.urlAPI+'file?all=1')
     }
 
 
@@ -25,7 +25,7 @@ export class FilesService {
 
     //
     getFreeFiles(userId:string){
-        return this.http.get<any>(environment.urlAPI+'file?user_id='+userId+'&group_id')
+        return this.http.get<any>(environment.urlAPI+'file?user_id='+userId+'&group_id=false')
     }
 
 
@@ -37,7 +37,7 @@ export class FilesService {
 
     //
     updateFileContent(fileID : string,data : any){
-         return this.http.put(environment.urlAPI+'file/'+fileID,data)
+         return this.http.post(environment.urlAPI+'file/'+fileID,data)
     }
 
 

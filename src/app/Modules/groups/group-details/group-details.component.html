@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="!loadGroup">
-   
+
     <div class="row">
 
         <div class="col-md-12">
@@ -24,25 +24,23 @@
                         <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
                           (click)="confirmAddedFile(fileFree.id)" >{{fileFree.name}}</button>
                     </mat-menu>
-        
                 </div>
-        
             </div>
             <br>
            <div class="row">
             <div class="col">
                 <button  (click)="checkInAll()"
                 mat-flat-button class="check-in-all" color="primary">Check in selected</button>
-                <button  (click)="checkOutAll()" 
+                <button  (click)="checkOutAll()"
                 mat-flat-button  color="primary">Check out selected</button>
             </div>
            </div>
             <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
                 <div class="col-md-auto">
-                    <mat-checkbox 
+                    <mat-checkbox
                     (click)="editCheckArray(file.id)"
                     [checked]="selectedFiles.indexOf(file.id)!= -1">
-                     
+
                   </mat-checkbox>
                 </div>
                 <div class="col-md-auto">
@@ -54,38 +52,38 @@
 
                     <mat-icon *ngIf="file.locked_by" style="color: red;">lock</mat-icon>
 
-                    <span *ngIf="file.status==2 && file.locked_by.user.id==userId">locked by you</span>
+                    <span *ngIf="file.status==2 && file?.locked_by?.id==userId">locked by you</span>
 
-                    <span *ngIf="file.status==2 && file.locked_by.user.id!=userId">locked by {{ file.locked_by.user.name}}</span>
+                    <span *ngIf="file.status==2 && file?.locked_by?.id!=userId">locked by {{ file?.locked_by?.name}}</span>
 
-                    <mat-icon *ngIf="!file.locked_by" style="color: green;">lock_open</mat-icon>
-        
+                    <mat-icon *ngIf="!file?.locked_by" style="color: green;">lock_open</mat-icon>
+
                     <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-        
-                    <button *ngIf="file.status==2 && file.locked_by.user.id==userId" (click)="checkOut(file.id)" 
+
+                    <button *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="getFileContent(file.id)"
                     mat-flat-button class="cheeck-btn" color="accent">Edit</button>
                     <button *ngIf="file.status==1" (click)="checkIn(file.id)"
                     mat-flat-button class="cheeck-btn" color="primary">Check in</button>
-                    <button *ngIf="file.status==2 && file.locked_by.user.id==userId" (click)="checkOut(file.id)" 
+                    <button *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="checkOut(file.id)"
                     mat-flat-button class="cheeck-btn" color="primary">Check out</button>
-        
-                    <mat-menu #menu="matMenu">getFileLoges
+
+                    <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="confirmDeletedFile(file.id)">Delete</button>
                         <button mat-menu-item (click)="getFileLoges(file.id)">Show log file</button>
                     </mat-menu>
                 </div>
-        
+
             </div>
-        
+
         </mat-tab>
 
 
 
 
         <mat-tab label="Users">
-           
+
             <div class="row">
                 <div class="col-md-12">
                   <button mat-flat-button class="add-file-btn" (click)="showUserAvivableDialog()">Add new users</button>
@@ -172,7 +170,7 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
             </span>
         </ng-template>
     </p-editor>
-    
+
         <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="updateFileContent()"  label="Ok" styleClass="p-button-text"></p-button>
         </ng-template>

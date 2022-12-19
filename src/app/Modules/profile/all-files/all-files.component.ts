@@ -28,7 +28,7 @@ export class AllFilesComponent implements OnInit{
   getAllFilesAdmin(){
     this.filesService.getAllFilesAdmin().subscribe({
       next:(res : any)=>{
-       this.allFilesArray=res.data
+       this.allFilesArray=res.data.data
       },
       error:(error : any)=>{
         this.showError(error.error.message)

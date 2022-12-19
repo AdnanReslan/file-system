@@ -67,15 +67,11 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   getFileLoges(fileID : number){
-    
     this.groupService.getGroup(this.groupId).subscribe({
       next: (res: any) => {
         for(let i=0 ; i<res.data.files.length ; i++){
           if(fileID==res.data.files[i].id){
-            this.fileLogesArray=[]
-          for(let j=0 ; j<res.data.files.file_logs.length ; j++){
-              this.fileLogesArray.push(res.data.files[i].file_logs[j])
-          }
+            this.fileLogesArray= res.data.files[i].file_logs;
         }
         }
         this.displayLogFileModal=true
@@ -112,10 +108,8 @@ export class GroupDetailsComponent implements OnInit {
         reject: (type : any) => {
             switch(type) {
                 case ConfirmEventType.REJECT:
-                    
                 break;
                 case ConfirmEventType.CANCEL:
-                   
                 break;
             }
         }
@@ -178,7 +172,7 @@ export class GroupDetailsComponent implements OnInit {
         this.getFiles()
       },
       error: (res: any) => {
-        this.showError('File not delete successfuly')
+        this.showError(res.error.message)
       }
 
     })
@@ -308,7 +302,6 @@ export class GroupDetailsComponent implements OnInit {
       const index = this.selectedFiles.indexOf(fileId)
       this.selectedFiles.splice(index, 1)
     }
-  
   }
 
 
@@ -336,7 +329,6 @@ export class GroupDetailsComponent implements OnInit {
     for(let i=0 ; i<this.selectedFiles.length;i++){
       data.append('files['+i.toString()+']',this.selectedFiles[i])
     }
-    
     this.fileServices.checkOut(data).subscribe({
       next:(res : any)=>{
         this.showSuccess('Files has been check out successfuly')
@@ -368,6 +360,7 @@ export class GroupDetailsComponent implements OnInit {
   updateFileContent(){
     let data = new FormData()
     data.append('content',this.contentFile)
+    data.append('_method',"PUT")
     this.fileServices.updateFileContent(this.fileIdEdit.toString(),data).subscribe({
       next:(res : any)=>{
         this.showSuccess('File Update Successfuly')
