@@ -29,12 +29,27 @@
         
             </div>
             <br>
-           
+           <div class="row">
+            <div class="col">
+                <button  (click)="checkInAll()"
+                mat-flat-button class="check-in-all" color="primary">Check in selected</button>
+                <button  (click)="checkOutAll()" 
+                mat-flat-button  color="primary">Check out selected</button>
+            </div>
+           </div>
             <div class="row" style="margin-bottom: 15px;" *ngFor="let file of group.files">
+                <div class="col-md-auto">
+                    <mat-checkbox 
+                    (click)="editCheckArray(file.id)"
+                    [checked]="selectedFiles.indexOf(file.id)!= -1">
+                     
+                  </mat-checkbox>
+                </div>
                 <div class="col-md-auto">
                     <img src="assets/images/Clipboard.svg" class="file-icon" alt="file">
                 </div>
                 <div class="col-md">
+
                     <span class="file-name">{{file.name}}</span>
 
                     <mat-icon *ngIf="file.locked_by" style="color: red;">lock</mat-icon>

@@ -26,6 +26,7 @@ export class GroupDetailsComponent implements OnInit {
   userAvivableArray:any[]=[]
   userId!:any
   fileLogesArray:any[]=[]
+  selectedFiles:any[]=[]
 
   //
   constructor(private groupService: GroupsService,
@@ -271,6 +272,7 @@ export class GroupDetailsComponent implements OnInit {
     this.fileServices.checkIn(data).subscribe({
       next:(res : any)=>{
          this.showSuccess('File has been check in successfuly')
+         this.getGroup()
       },
       error:(error : any)=>{
         this.showError(error.error.message)
@@ -286,6 +288,56 @@ export class GroupDetailsComponent implements OnInit {
     this.fileServices.checkOut(data).subscribe({
       next:(res : any)=>{
         this.showSuccess('File has been check out successfuly')
+        this.getGroup()
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  editCheckArray(fileId : number){
+    if(this.selectedFiles.indexOf(fileId) == -1){
+      this.selectedFiles.push(fileId)
+    }
+    else{
+      const index = this.selectedFiles.indexOf(fileId)
+      this.selectedFiles.splice(index, 1)
+    }
+  
+  }
+
+
+  //
+  checkInAll(){
+    let data = new FormData();
+    for(let i=0 ; i<this.selectedFiles.length;i++){
+      data.append('files['+i.toString()+']',this.selectedFiles[i])
+    }
+    this.fileServices.checkIn(data).subscribe({
+      next:(res : any)=>{
+         this.showSuccess('Files has been check in successfuly')
+         this.getGroup()
+      },
+      error:(error : any)=>{
+        this.showError(error.error.message)
+      }
+    })
+  }
+
+
+  //
+  checkOutAll(){
+    let data = new FormData();
+    for(let i=0 ; i<this.selectedFiles.length;i++){
+      data.append('files['+i.toString()+']',this.selectedFiles[i])
+    }
+    
+    this.fileServices.checkOut(data).subscribe({
+      next:(res : any)=>{
+        this.showSuccess('Files has been check out successfuly')
+        this.getGroup()
       },
       error:(error : any)=>{
         this.showError(error.error.message)
