@@ -29,7 +29,9 @@ export class GroupDetailsComponent implements OnInit {
   fileLogesArray:any[]=[]
   selectedFiles:any[]=[]
   contentFile:string=''
-  fileIdEdit!:number
+  fileIdEdit!:number;
+  loadRequest:boolean=false
+  loadUser:boolean=false;
   //
   constructor(private groupService: GroupsService,
     private fileServices: FilesService,
@@ -192,9 +194,10 @@ export class GroupDetailsComponent implements OnInit {
     this.userServices.getAvivableUser(this.groupId,search).subscribe({
       next:(res : any)=>{
         this.userAvivableArray=res.data.data
+        this.loadUser=false
       },
       error:(error : any)=>{
-
+        this.loadUser=false
       }
     })
   }
@@ -208,15 +211,18 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   addUserToGroup(userId : string){
+    this.loadUser=true
     let data = new FormData()
     data.append('user_id',userId)
     this.userServices.addUserToGroup(data,this.groupId).subscribe({
       next:(res : any)=>{
         this.getGroup()
+        this.getAvivableUserToAdd('')
         this.showSuccess('User Added successfuly to group')
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadUser=false
       }
     })
   }
@@ -264,15 +270,18 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   checkIn(fileId : number){
+    this.loadRequest=true
     let data = new FormData();
     data.append('files[0]',fileId.toString())
     this.fileServices.checkIn(data).subscribe({
       next:(res : any)=>{
          this.showSuccess('File has been check in successfuly')
          this.getGroup()
+         this.loadRequest=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadRequest=false
       }
     })
   }
@@ -280,15 +289,18 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   checkOut(fileId : number){
+    this.loadRequest=true
     let data = new FormData();
     data.append('files[0]',fileId.toString())
     this.fileServices.checkOut(data).subscribe({
       next:(res : any)=>{
         this.showSuccess('File has been check out successfuly')
         this.getGroup()
+        this.loadRequest=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadRequest=false
       }
     })
   }
@@ -307,6 +319,7 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   checkInAll(){
+    this.loadRequest=true
     let data = new FormData();
     for(let i=0 ; i<this.selectedFiles.length;i++){
       data.append('files['+i.toString()+']',this.selectedFiles[i])
@@ -315,9 +328,11 @@ export class GroupDetailsComponent implements OnInit {
       next:(res : any)=>{
          this.showSuccess('Files has been check in successfuly')
          this.getGroup()
+         this.loadRequest=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadRequest=false
       }
     })
   }
@@ -325,6 +340,7 @@ export class GroupDetailsComponent implements OnInit {
 
   //
   checkOutAll(){
+    this.loadRequest=true
     let data = new FormData();
     for(let i=0 ; i<this.selectedFiles.length;i++){
       data.append('files['+i.toString()+']',this.selectedFiles[i])
@@ -333,9 +349,11 @@ export class GroupDetailsComponent implements OnInit {
       next:(res : any)=>{
         this.showSuccess('Files has been check out successfuly')
         this.getGroup()
+        this.loadRequest=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadRequest=false
       }
     })
   }
@@ -344,13 +362,18 @@ export class GroupDetailsComponent implements OnInit {
   //
   getFileContent(fileID : number){
     this.fileIdEdit=fileID
+    this.loadRequest=true
     this.fileServices.getFileContent(fileID.toString()).subscribe({
       next:(res : any)=>{
         this.contentFile=res.data.content
         this.displayEditFileModal=true
+        this.loadGroup=false
+        this.loadRequest=false
       },
       error:(error : any)=>{
         this.showError(error.error.message)
+        this.loadGroup=false
+        this.loadRequest=false
       }
     })
   }

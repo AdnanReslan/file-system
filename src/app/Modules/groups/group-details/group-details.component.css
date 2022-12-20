@@ -47,3 +47,11 @@
 .check-in-all{
     margin-right: 15px;
 }
+
+::ng-deep .mat-mdc-tab-body-content {
+    overflow-x: hidden !important;
+}
+
+.hidden{
+    visibility: hidden;
+}

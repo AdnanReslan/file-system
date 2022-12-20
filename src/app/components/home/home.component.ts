@@ -83,11 +83,11 @@ export class HomeComponent implements OnInit,AfterViewInit {
     next:((res : any)=>{
       localStorage.clear();
       this.router.navigate(['/login'])
-      this.showSuccess(res.message)
+      this.showSuccess('success log out')
       this.loadLogout=false
     }),
     error:((error : any)=>{
-      this.showError(error.message)
+      this.showError(error.error.message)
       this.loadLogout=false
     })
   })

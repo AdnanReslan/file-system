@@ -23,29 +23,29 @@
                     <mat-menu #menuFile="matMenu">
                         <span style="padding-left: 10px;" *ngIf="fileFreeArray.length==0">No Files</span>
                         <button *ngFor="let fileFree of fileFreeArray" mat-menu-item
-                          (click)="confirmAddedFile(fileFree.id)" >{{fileFree.name}}</button>
+                            (click)="confirmAddedFile(fileFree.id)">{{fileFree.name}}</button>
                     </mat-menu>
                 </div>
             </div>
             <br>
-           <div class="row" style="margin-bottom: 30px;">
-            <div class="col">
-                <button  (click)="checkInAll()"
-                mat-flat-button class="check-in-all" color="primary">Check in selected</button>
+            <div class="row " [ngClass]="{'hidden':(group.files.length==0 || selectedFiles.length==0)}" 
+                style="margin-bottom: 30px; margin-right: 0px !important;">
+                <div class="col">
+
+                    <button [disabled]="loadRequest" (click)="checkInAll()" mat-flat-button class="check-in-all"
+                    color="primary">Check in selected</button>
 
 
-                <button  (click)="checkOutAll()"
-                mat-flat-button  color="primary">Check out selected</button>
+                    <button [disabled]="loadRequest" (click)="checkOutAll()" mat-flat-button 
+                    color="primary">Check out selected</button>
 
+                </div>
             </div>
-           </div>
             <div class="row" style="margin-bottom: 25px;" *ngFor="let file of group.files">
                 <div class="col-md-auto">
-                    <mat-checkbox
-                    (click)="editCheckArray(file.id)"
-                    [checked]="selectedFiles.indexOf(file.id)!= -1">
+                    <mat-checkbox (click)="editCheckArray(file.id)" [checked]="selectedFiles.indexOf(file.id)!= -1">
 
-                  </mat-checkbox>
+                    </mat-checkbox>
                 </div>
                 <div class="col-md-auto">
                     <img src="assets/images/Clipboard.svg" class="file-icon" alt="file">
@@ -55,31 +55,35 @@
                     <span class="file-name">{{file.name}}</span>
 
 
-                    <button style="float: right;" mat-button [matMenuTriggerFor]="menu">
+                    <button [disabled]="loadRequest" style="float: right;" mat-button [matMenuTriggerFor]="menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
 
-                    <span *ngIf="file.status==2 && file?.locked_by?.id==userId" style="float: right;margin:0px 10px ;">locked by you</span>
+                    <span *ngIf="file.status==2 && file?.locked_by?.id==userId"
+                        style="float: right;margin:0px 10px ;">locked by you</span>
 
-                    <span *ngIf="file.status==2 && file?.locked_by?.id!=userId" style="float: right;margin:0px 10px ;">locked by {{ file?.locked_by?.name}}</span>
+                    <span *ngIf="file.status==2 && file?.locked_by?.id!=userId"
+                        style="float: right;margin:0px 10px ;">locked by {{ file?.locked_by?.name}}</span>
 
                     <mat-icon *ngIf="file.locked_by" style="color: red; float: right;margin:0px 10px ;">lock</mat-icon>
 
-                    <mat-icon *ngIf="!file?.locked_by" style="color: green; float: right;margin:0px 10px ;">lock_open</mat-icon>
+                    <mat-icon *ngIf="!file?.locked_by"
+                        style="color: green; float: right;margin:0px 10px ;">lock_open</mat-icon>
 
 
-                 
 
-                    
 
-                  
+                    <button [disabled]="loadRequest" *ngIf="file.status==2 && file?.locked_by?.id==userId" 
+                             (click)="getFileContent(file.id)"
+                              mat-flat-button class="cheeck-btn" color="accent">Edit</button>
 
-                    <button *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="getFileContent(file.id)"
-                    mat-flat-button class="cheeck-btn" color="accent">Edit</button>
-                    <button *ngIf="file.status==1" (click)="checkIn(file.id)"
-                    mat-flat-button class="cheeck-btn" color="primary">Check in</button>
-                    <button *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="checkOut(file.id)"
-                    mat-flat-button class="cheeck-btn" color="primary">Check out</button>
+
+                    <button [disabled]="loadRequest" *ngIf="file.status==1" (click)="checkIn(file.id)" mat-flat-button class="cheeck-btn"
+                        color="primary">Check in</button>
+
+
+                    <button [disabled]="loadRequest" *ngIf="file.status==2 && file?.locked_by?.id==userId" (click)="checkOut(file.id)"
+                        mat-flat-button class="cheeck-btn" color="primary">Check out</button>
 
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="confirmDeletedFile(file.id)">Delete</button>
@@ -96,38 +100,39 @@
 
         <mat-tab label="Users">
 
-            <div class="row" style="margin: 20px 0px;" >
-                <div class="col-md-12"  >
-                  <button mat-flat-button class="add-file-btn" (click)="showUserAvivableDialog()">Add new users</button>
+            <div class="row" style="margin: 20px 0px;">
+                <div class="col-md-12">
+                    <button  mat-flat-button class="add-file-btn" (click)="showUserAvivableDialog()">Add new
+                        users</button>
                 </div>
             </div>
-            
-         
-            <div class="row" style="margin-bottom: 25px;" *ngFor="let user of group.users"  >
-                <div class="col-md-12" >
-                 <img src="assets/images/unknow.jfif" class="user-img" >
-                 <span class="user-name">{{user.name}}</span>
 
-                 <button mat-icon-button [matMenuTriggerFor]="menuUser" style="float: right;">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menuUser="matMenu">
-                    <button mat-menu-item (click)="confirmDeletedUser(user.id)">
-                      <span>Delete</span>
+
+            <div class="row" style="margin-bottom: 25px;" *ngFor="let user of group.users">
+                <div class="col-md-12">
+                    <img src="assets/images/unknow.jfif" class="user-img">
+                    <span class="user-name">{{user.name}}</span>
+
+                    <button mat-icon-button [matMenuTriggerFor]="menuUser" style="float: right;">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                  </mat-menu>
+                    <mat-menu #menuUser="matMenu">
+                        <button mat-menu-item (click)="confirmDeletedUser(user.id)">
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
                 </div>
             </div>
-  
-        
+
+
         </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
 </div>
 
 <!--   -->
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
-rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 
 
 <!-- User Dialog -->
@@ -144,31 +149,32 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
             <img src="assets/images/unknow.jfif" class="user-img" alt="user-photo">
             <span>{{userAvivable.name}}</span>
 
-            <button (click)="addUserToGroup(userAvivable.id)" mat-mini-fab color="primary" style="float: right;" >
+            <button [disabled]="loadUser"  (click)="addUserToGroup(userAvivable.id)" mat-mini-fab color="primary" style="float: right;">
                 <mat-icon>add</mat-icon>
-              </button>
+            </button>
         </div>
     </div>
 </p-dialog>
 
 
 <!-- File Log Dialog -->
-<p-dialog header="Long Content" [(visible)]="displayLogFileModal" [style]="{width: '50vw'}">
+<p-dialog header="File log" [(visible)]="displayLogFileModal" [style]="{width: '60vw'}">
     <div class="row" *ngFor="let log of fileLogesArray">
-             <div class="col-md-auto">
-                <span>Action: {{log.action}}</span>
-             </div>
+        <div class="col-md-4">
+            <span>Action: {{log.action}}</span>
+        </div>
 
-             <div class="col-md-auto">
-                <span>Edit by: {{log.user.name}}</span>
-             </div>
+        <div class="col-md-4">
+            <span>Edit by: {{log.user.name}}</span>
+        </div>
 
-             <div class="col-md-auto">
-                <span>Edit Date: {{log.updated_at}}</span>
-             </div>
+        <div class="col-md-4">
+            <span>Edit Date: {{log.updated_at | date}}</span>
+        </div>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displayLogFileModal=false" label="Ok" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="displayLogFileModal=false" label="Ok"
+            styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
 
@@ -186,7 +192,7 @@ rejectButtonStyleClass="p-button-text"></p-confirmDialog>
         </ng-template>
     </p-editor>
 
-        <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="updateFileContent()"  label="Ok" styleClass="p-button-text"></p-button>
-        </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="updateFileContent()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
 </p-dialog>
